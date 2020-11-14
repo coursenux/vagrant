@@ -10,7 +10,7 @@
 
 ## Author
 
-👤 **Coursenux Engineers**
+👤 **Coursenux Tech**
 
 Example commands running from `./vagrant`
 
