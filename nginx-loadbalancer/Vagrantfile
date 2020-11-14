@@ -1,0 +1,92 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "coursenux-webserver1" do |webserver1|
+  	webserver1.vm.box = "ubuntu/bionic64"
+	webserver1.vm.hostname = "coursenux-webserver1"
+    webserver1.vm.box_check_update = false
+  	webserver1.vm.network :forwarded_port, guest: 22, host: 22291, id: 'ssh'
+
+	webserver1.ssh.port = 22291
+	webserver1.ssh.insert_key = false
+
+	# Create a private network, which allows host-only access to the machine
+	# using a specific IP.
+    webserver1.vm.network :private_network, ip: "192.168.100.21"
+
+	# If true, then any SSH connections made will enable agent forwarding.
+	# Default value: false
+	webserver1.ssh.forward_agent = true
+
+	# Provider-specific configuration so you can fine-tune various
+	# backing providers for Vagrant. These expose provider-specific options.
+
+	webserver1.vm.provider :virtualbox do |vb|
+	  # Use VBoxManage to customize the VM. For example to change memory:
+	  vb.customize ["modifyvm", :id, "--memory", "1024"]
+	  vb.customize ["modifyvm", :id, "--acpi",   "on"]
+	  vb.customize ["modifyvm", :id, "--ioapic", "on"]
+	  vb.customize ["modifyvm", :id, "--cpus",   "1"]
+    config.disksize.size = '10GB'
+	end
+  end
+
+  config.vm.define "coursenux-webserver2" do |webserver2|
+  	webserver2.vm.box = "ubuntu/bionic64"
+	webserver2.vm.hostname = "coursenux-webserver2"
+    webserver2.vm.box_check_update = false
+  	webserver2.vm.network :forwarded_port, guest: 22, host: 22292, id: 'ssh'
+
+	webserver2.ssh.port = 22292
+	webserver2.ssh.insert_key = false
+
+	# Create a private network, which allows host-only access to the machine
+	# using a specific IP.
+    webserver2.vm.network :private_network, ip: "192.168.100.22"
+
+	# If true, then any SSH connections made will enable agent forwarding.
+	# Default value: false
+	webserver2.ssh.forward_agent = true
+
+	# Provider-specific configuration so you can fine-tune various
+	# backing providers for Vagrant. These expose provider-specific options.
+
+	webserver2.vm.provider :virtualbox do |vb|
+	  # Use VBoxManage to customize the VM. For example to change memory:
+	  vb.customize ["modifyvm", :id, "--memory", "1024"]
+	  vb.customize ["modifyvm", :id, "--acpi",   "on"]
+	  vb.customize ["modifyvm", :id, "--ioapic", "on"]
+	  vb.customize ["modifyvm", :id, "--cpus",   "1"]
+    config.disksize.size = '10GB'
+	end
+  end
+
+  config.vm.define "coursenux-loadbalancer" do |loadbalancer|
+  	loadbalancer.vm.box = "ubuntu/bionic64"
+	loadbalancer.vm.hostname = "coursenux-loadbalancer"
+    loadbalancer.vm.box_check_update = false
+  	loadbalancer.vm.network :forwarded_port, guest: 22, host: 22293, id: 'ssh'
+
+	loadbalancer.ssh.port = 22293
+	loadbalancer.ssh.insert_key = false
+
+	# Create a private network, which allows host-only access to the machine
+	# using a specific IP.
+    loadbalancer.vm.network :private_network, ip: "192.168.100.23"
+
+	# If true, then any SSH connections made will enable agent forwarding.
+	# Default value: false
+	loadbalancer.ssh.forward_agent = true
+
+	# Provider-specific configuration so you can fine-tune various
+	# backing providers for Vagrant. These expose provider-specific options.
+
+	loadbalancer.vm.provider :virtualbox do |vb|
+	  # Use VBoxManage to customize the VM. For example to change memory:
+	  vb.customize ["modifyvm", :id, "--memory", "1024"]
+	  vb.customize ["modifyvm", :id, "--acpi",   "on"]
+	  vb.customize ["modifyvm", :id, "--ioapic", "on"]
+	  vb.customize ["modifyvm", :id, "--cpus",   "1"]
+    config.disksize.size = '10GB'
+	end
+  end
+
+end
